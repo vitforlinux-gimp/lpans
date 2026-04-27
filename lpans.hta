@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>LCARSpanel</title>
+    <HTA:APPLICATION
+        APPLICATIONNAME="PannelloAdmin"
+        ID="AdminPanel"
+        VERSION="2.0"
+        WINDOWSTATE="normal"
+        SHOWINTASKBAR="no"
+        SINGLEINSTANCE="yes"
+        BORDER="dialog"
+        CAPTION="yes"
+        SYSMENU="yes"
+        CONTEXTMENU="yes"
+        MAXIMIZEBUTTON="yes"
+        MINIMIZEBUTTON="yes"
+        ICON="shell32.dll,21"
+    />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            padding: 30px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 95%;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 5px;
+            color: #ffffff;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(0,212,255,0.5);
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #aaaaaa;
+            font-size: 18px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .category {
+            background: #111111;
+            border: 3px solid #222222;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            padding: 25px;
+        }
+        .category h2 {
+            font-size: 24px;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #00d4ff;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .btn-action {
+            background: #1a1a2e;
+            border: 3px solid #333344;
+            color: #ffffff;
+            width: 33%;
+            padding: 20px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 18px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 800;
+        }
+        .btn-action:hover {
+            background: #00d4ff;
+            border-color: #00d4ff;
+            color: #000000;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,212,255,0.4);
+        }
+        .btn-action:active {
+            transform: translateY(0);
+        }
+        .btn-action .icon {
+            font-size: 32px;
+            width: 50px;
+            text-align: center;
+        }
+        .btn-action .label {
+            flex: 1;
+            font-weight: 900;
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        .btn-action .comando {
+            font-size: 20px;
+            color: #FFFFFF;
+            display: block;
+            margin-top: 5px;
+            font-weight: 700;
+            font-family: 'Consolas', 'Courier New', monospace;
+            letter-spacing: 0.5px;
+        }
+        .btn-action:hover .comando {
+            color: #333333;
+        }
+        .status-bar {
+            text-align: center;
+            padding: 20px;
+            background: #0a0a0a;
+            border: 3px solid #222222;
+            border-radius: 12px;
+            margin-top: 30px;
+            font-size: 18px;
+            color: #aaaaaa;
+            font-weight: 700;
+        }
+        #statusText {
+            color: #00d4ff;
+            font-weight: 900;
+            font-size: 20px;
+        }
+        .status-bar span.info {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666666;
+            font-weight: 600;
+        }
+        @media (max-width: 600px) {
+            .btn-grid {
+                grid-template-columns: 1fr;
+            }
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .btn-action .label {
+                font-size: 16px;
+            }
+        }
+    </style>
+
+    <script language="VBScript">
+        Sub apriProgramma(programma)
+            Dim objShell
+            Set objShell = CreateObject("WScript.Shell")
+            objShell.Run programma, 1, False
+            Set objShell = Nothing
+        End Sub
+
+        Sub apriComandoPersistente(comando)
+            Dim objShell
+            Set objShell = CreateObject("WScript.Shell")
+            objShell.Run "cmd.exe /k " & comando, 1, False
+            Set objShell = Nothing
+        End Sub
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h1>⚙️ LCARSpanel</h1>
+    <p class="subtitle">▸ Strumenti di Sistema e Diagnostica di Rete ◂</p>
+
+    <!-- Pannelli di Controllo -->
+    <div class="category">
+        <h2>📋 PANNELLI DI CONTROLLO</h2>
+        <div class="btn-grid">
+            <button class="btn-action" onclick="apriProgramma('control sysdm.cpl')">
+                <span class="icon">🖥️</span>
+                <span class="label">Proprietà Sistema<span class="comando">control sysdm.cpl</span></span>
+            </button>
+            
+            <button class="btn-action" onclick="apriProgramma('control')">
+                <span class="icon">🖥️</span>
+                <span class="label">Pannello controllo<span class="comando">control</span></span>
+            </button>
+            <button class="btn-action" onclick="apriProgramma('compmgmt.msc')">
+                <span class="icon">🖥️</span>
+                <span class="label">Gestione computer<span class="comando">compmgmt.msc</span></span>
+            </button>
+            
+            <button class="btn-action" onclick="apriProgramma('taskmgr.exe')">
+                <span class="icon">🖥️</span>
+                <span class="label">Pannello processi<span class="comando">taskmgr.exe</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('control userpasswords2')">
+                <span class="icon">👥</span>
+                <span class="label">Utenti e Password<span class="comando">control userpasswords2</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('control firewall.cpl')">
+                <span class="icon">🛡️</span>
+                <span class="label">Firewall Windows<span class="comando">control firewall.cpl</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('control appwiz.cpl')">
+                <span class="icon">📦</span>
+                <span class="label">Programmi e Funzionalità<span class="comando">control appwiz.cpl</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('control ncpa.cpl')">
+                <span class="icon">🌐</span>
+                <span class="label">Connessioni di Rete<span class="comando">control ncpa.cpl</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('control desk.cpl')">
+                <span class="icon">🖼️</span>
+                <span class="label">Impostazioni Schermo<span class="comando">control desk.cpl</span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Console MMC -->
+    <div class="category">
+        <h2>🛠️ CONSOLE DI GESTIONE (MMC)</h2>
+        <div class="btn-grid">
+            <button class="btn-action" onclick="apriProgramma('lusrmgr.msc')">
+                <span class="icon">👤</span>
+                <span class="label">Utenti e Gruppi Locali<span class="comando">lusrmgr.msc</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('secpol.msc')">
+                <span class="icon">🔒</span>
+                <span class="label">Criteri di Sicurezza<span class="comando">secpol.msc</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('gpedit.msc')">
+                <span class="icon">🏛️</span>
+                <span class="label">Criteri di Gruppo<span class="comando">gpedit.msc</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('devmgmt.msc')">
+                <span class="icon">💻</span>
+                <span class="label">Gestione Dispositivi<span class="comando">devmgmt.msc</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('diskmgmt.msc')">
+                <span class="icon">💾</span>
+                <span class="label">Gestione Disco<span class="comando">diskmgmt.msc</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('services.msc')">
+                <span class="icon">⚡</span>
+                <span class="label">Servizi Windows<span class="comando">services.msc</span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Comandi di Rete -->
+    <div class="category">
+        <h2>🌍 DIAGNOSTICA RETE</h2>
+        <div class="btn-grid">
+            <button class="btn-action" onclick="apriComandoPersistente('ipconfig')">
+                <span class="icon">🔢</span>
+                <span class="label">IPConfig<span class="comando">ipconfig</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriComandoPersistente('ipconfig /all')">
+                <span class="icon">📋</span>
+                <span class="label">IPConfig All<span class="comando">ipconfig /all</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriComandoPersistente('ping google.com')">
+                <span class="icon">📡</span>
+                <span class="label">Ping Google<span class="comando">ping google.com</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriComandoPersistente('tracert google.com')">
+                <span class="icon">🗺️</span>
+                <span class="label">Traceroute<span class="comando">tracert google.com</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriComandoPersistente('nslookup google.com')">
+                <span class="icon">🔍</span>
+                <span class="label">NSLookup<span class="comando">nslookup google.com</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriComandoPersistente('netstat -an')">
+                <span class="icon">🔌</span>
+                <span class="label">Netstat<span class="comando">netstat -an</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriComandoPersistente('route print')">
+                <span class="icon">🗺️</span>
+                <span class="label">Tabella di Routing<span class="comando">route print</span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Comandi di Sistema -->
+    <div class="category">
+        <h2>💻 DIAGNOSTICA SISTEMA</h2>
+        <div class="btn-grid">
+            <button class="btn-action" onclick="apriComandoPersistente('systeminfo')">
+                <span class="icon">ℹ️</span>
+                <span class="label">Informazioni Sistema<span class="comando">systeminfo</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('msinfo32')">
+                <span class="icon">📊</span>
+                <span class="label">MSInfo32<span class="comando">msinfo32</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriComandoPersistente('sfc /scannow')">
+                <span class="icon">🔧</span>
+                <span class="label">SFC ScanNow<span class="comando">sfc /scannow</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriComandoPersistente('chkdsk C:')">
+                <span class="icon">💿</span>
+                <span class="label">ChkDsk C:<span class="comando">chkdsk C:</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriComandoPersistente('tasklist')">
+                <span class="icon">📝</span>
+                <span class="label">Elenco Processi<span class="comando">tasklist</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('regedit')">
+                <span class="icon">⚙️</span>
+                <span class="label">Editor del Registro<span class="comando">regedit</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriComandoPersistente('wmic os get Caption,Version,BuildNumber')">
+                <span class="icon">🏷️</span>
+                <span class="label">Versione Windows<span class="comando">wmic os get Caption,Version,BuildNumber</span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- CMD -->
+    <div class="category">
+        <h2>💻 TERMINALE</h2>
+        <div class="btn-grid">
+            <button class="btn-action" onclick="apriProgramma('cmd')">
+                <span class="icon">🖥️</span>
+                <span class="label">CMD Standard<span class="comando">cmd</span></span>
+            </button>
+
+            <button class="btn-action" onclick="apriProgramma('runas /user:Administrator cmd')">
+                <span class="icon">🔐</span>
+                <span class="label">CMD come Admin<span class="comando">runas /user:Administrator cmd</span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Barra di stato -->
+    <div class="status-bar">
+        STATO: <span id="statusText">✅ PRONTO</span>
+        <span class="info">▸ Clicca su un bottone per avviare lo strumento ◂</span>
+        <span class="info">▸ Nessun avviso antivirus — tutti comandi Microsoft ufficiali ◂</span>
+    </div>
+</div>
+
+</body>
+</html>
